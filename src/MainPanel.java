@@ -29,8 +29,16 @@ public class MainPanel extends JFrame {
     }
 
     public static void main(String[] args) {
+        //获取当前屏幕的长和宽
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int screenWidth = screenSize.width;
+        int screenHeight = screenSize.height;
+
         MainPanel mainPanel = new MainPanel();
         mainPanel.pack();
+        mainPanel.setResizable(false);
+        mainPanel.setLocation(screenWidth / 2 - mainPanel.getWidth() / 2, screenHeight / 2 - mainPanel.getHeight() / 2);
+        mainPanel.setTitle("Calculator");
         mainPanel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainPanel.setVisible(true);
     }
