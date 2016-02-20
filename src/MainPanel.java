@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
 
 /**
  * Created by ht on 2016/2/14.
@@ -28,17 +29,29 @@ public class MainPanel extends JFrame {
         this.getContentPane().add(p, BorderLayout.SOUTH);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         //获取当前屏幕的长和宽
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int screenWidth = screenSize.width;
         int screenHeight = screenSize.height;
 
+        RandomAccessFile raf = new RandomAccessFile("countFile.w", "rw");
+        int count = 0;
+        long point = raf.length();
+        if (point != 0) {
+            count = raf.readInt();
+            raf.seek(0);
+            raf.writeInt(++count);
+        } else {
+            raf.writeInt(1);
+        }
+        raf.close();
+
         MainPanel mainPanel = new MainPanel();
         mainPanel.pack();
         mainPanel.setResizable(false);
         mainPanel.setLocation(screenWidth / 2 - mainPanel.getWidth() / 2, screenHeight / 2 - mainPanel.getHeight() / 2);
-        mainPanel.setTitle("Calculator");
+        mainPanel.setTitle("Calculator is started " + count + " times");
         mainPanel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainPanel.setVisible(true);
     }
